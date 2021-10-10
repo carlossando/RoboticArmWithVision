@@ -130,7 +130,7 @@ class RobotArm {
 
     // When the mouse is released we're done with the spring
     void mouseReleased() {
-        //spring.destroy();
+        spring.destroy();
     }
 
     // When the mouse is pressed we. . .

@@ -15,10 +15,13 @@ import processing.video.*;
 //Video for image recognition
 Capture video;
 
-//Blob parameters
-color trackColor = -4939712;
-float threshold = 40;
-float distThreshold = 50;
+//--------------------------
+//Blob parameters --> Set up this parametes based on the other program
+color trackColor = -10395354;
+float threshold = 10;
+float distThreshold = 80;
+//--------------------------
+//keep a track of the blobs
 ArrayList<Blob> blobs = new ArrayList<Blob>();
 
 // A reference to our box2d world
@@ -44,18 +47,16 @@ void setup() {
     // Set a Gravity for the system
     box2d.setGravity(0, -25);
 
-    //Create ArrayList
+    //Boundaries
     boundaries = new ArrayList<Boundary>();
-
-    //Add boundaries
     AddBoundaries(floorVal[0],floorVal[1],floorVal[2],floorVal[3]);
 
-    //Create our Robot
+    //Create the Robot
     robot = new RobotArm(270,405);
-    //Create the PlayBox
+    //Create the play Box
     box = new Box( 350, 325);
 
-    // Add a listener to listen for collisions!
+    //Add a listener for collisions
     box2d.world.setContactListener(new CustomListener());
     
     //Video processing
@@ -73,8 +74,10 @@ void draw() {
 
     background(255);
     //println(new Vec2(mouseX,mouseY));
+
     // We must always step through time!
     box2d.step();
+
     // Display all the boundaries
     for (Boundary wall: boundaries) {
         wall.display();
@@ -103,34 +106,34 @@ void processImage(){
     // Begin loop to walk through every pixel
     for (int x = 0; x < video.width; x++ ) {
         for (int y = 0; y < video.height; y++ ) {
-        int loc = x + y * video.width;
-        // What is current color
-        color currentColor = video.pixels[loc];
-        float r1 = red(currentColor);
-        float g1 = green(currentColor);
-        float b1 = blue(currentColor);
-        float r2 = red(trackColor);
-        float g2 = green(trackColor);
-        float b2 = blue(trackColor);
+            int loc = x + y * video.width;
+            // What is current color
+            color currentColor = video.pixels[loc];
+            float r1 = red(currentColor);
+            float g1 = green(currentColor);
+            float b1 = blue(currentColor);
+            float r2 = red(trackColor);
+            float g2 = green(trackColor);
+            float b2 = blue(trackColor);
 
-        float d = distSq(r1, g1, b1, r2, g2, b2); 
+            float d = distSq(r1, g1, b1, r2, g2, b2); 
 
-        if (d < threshold*threshold) {
+            if (d < threshold*threshold) {
 
-            boolean found = false;
-            for (Blob b : blobs) {
-            if (b.isNear(x, y)) {
-                b.add(x, y);
-                found = true;
-                break;
+                boolean found = false;
+                for (Blob b : blobs) {
+                if (b.isNear(x, y)) {
+                    b.add(x, y);
+                    found = true;
+                    break;
+                }
+                }
+
+                if (!found) {
+                    Blob b = new Blob(x, y);
+                    blobs.add(b);
+                }
             }
-            }
-
-            if (!found) {
-            Blob b = new Blob(x, y);
-            blobs.add(b);
-            }
-        }
         }
     }
 
@@ -142,12 +145,11 @@ void processImage(){
     // }
 }
 
-// When the mouse is released we're done with the spring
+
 void mouseReleased() {
-    robot.mouseReleased();
+//    robot.mouseReleased();
 }
 
-// When the mouse is pressed we. . .
 void mousePressed() {
     for (Blob b : blobs) {
         if (b.size() > 500) {

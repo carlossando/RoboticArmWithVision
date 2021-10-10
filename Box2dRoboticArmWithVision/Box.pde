@@ -2,7 +2,6 @@
 
 class Box {
 
-  // We need to keep track of a Body and a width and height
   Body body;
   float w;
   float h;

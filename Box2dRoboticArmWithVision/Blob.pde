@@ -1,3 +1,8 @@
+// Daniel Shiffman
+// http://codingtra.in
+// http://patreon.com/codingtrain
+// Code for: https://youtu.be/1scFcY-xMrI
+
 class Blob {
   float minx;
   float miny;
@@ -45,12 +50,6 @@ class Blob {
   }
 
   boolean isNear(float x, float y) {
-
-    // The Rectangle "clamping" strategy
-    // float cx = max(min(x, maxx), minx);
-    // float cy = max(min(y, maxy), miny);
-    // float d = distSq(cx, cy, x, y);
-
     // Closest point in blob strategy
     float d = 10000000;
     for (PVector v : points) {

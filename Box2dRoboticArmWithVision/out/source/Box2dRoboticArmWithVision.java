@@ -49,10 +49,13 @@ public class Box2dRoboticArmWithVision extends PApplet {
 //Video for image recognition
 Capture video;
 
-//Blob parameters
-int trackColor = -4939712;
-float threshold = 40;
-float distThreshold = 50;
+//--------------------------
+//Blob parameters --> Set up this parametes based on the other program
+int trackColor = -10395354;
+float threshold = 10;
+float distThreshold = 80;
+//--------------------------
+//keep a track of the blobs
 ArrayList<Blob> blobs = new ArrayList<Blob>();
 
 // A reference to our box2d world
@@ -78,18 +81,16 @@ public void setup() {
     // Set a Gravity for the system
     box2d.setGravity(0, -25);
 
-    //Create ArrayList
+    //Boundaries
     boundaries = new ArrayList<Boundary>();
-
-    //Add boundaries
     AddBoundaries(floorVal[0],floorVal[1],floorVal[2],floorVal[3]);
 
-    //Create our Robot
+    //Create the Robot
     robot = new RobotArm(270,405);
-    //Create the PlayBox
+    //Create the play Box
     box = new Box( 350, 325);
 
-    // Add a listener to listen for collisions!
+    //Add a listener for collisions
     box2d.world.setContactListener(new CustomListener());
     
     //Video processing
@@ -107,8 +108,10 @@ public void draw() {
 
     background(255);
     //println(new Vec2(mouseX,mouseY));
+
     // We must always step through time!
     box2d.step();
+
     // Display all the boundaries
     for (Boundary wall: boundaries) {
         wall.display();
@@ -137,34 +140,34 @@ public void processImage(){
     // Begin loop to walk through every pixel
     for (int x = 0; x < video.width; x++ ) {
         for (int y = 0; y < video.height; y++ ) {
-        int loc = x + y * video.width;
-        // What is current color
-        int currentColor = video.pixels[loc];
-        float r1 = red(currentColor);
-        float g1 = green(currentColor);
-        float b1 = blue(currentColor);
-        float r2 = red(trackColor);
-        float g2 = green(trackColor);
-        float b2 = blue(trackColor);
+            int loc = x + y * video.width;
+            // What is current color
+            int currentColor = video.pixels[loc];
+            float r1 = red(currentColor);
+            float g1 = green(currentColor);
+            float b1 = blue(currentColor);
+            float r2 = red(trackColor);
+            float g2 = green(trackColor);
+            float b2 = blue(trackColor);
 
-        float d = distSq(r1, g1, b1, r2, g2, b2); 
+            float d = distSq(r1, g1, b1, r2, g2, b2); 
 
-        if (d < threshold*threshold) {
+            if (d < threshold*threshold) {
 
-            boolean found = false;
-            for (Blob b : blobs) {
-            if (b.isNear(x, y)) {
-                b.add(x, y);
-                found = true;
-                break;
+                boolean found = false;
+                for (Blob b : blobs) {
+                if (b.isNear(x, y)) {
+                    b.add(x, y);
+                    found = true;
+                    break;
+                }
+                }
+
+                if (!found) {
+                    Blob b = new Blob(x, y);
+                    blobs.add(b);
+                }
             }
-            }
-
-            if (!found) {
-            Blob b = new Blob(x, y);
-            blobs.add(b);
-            }
-        }
         }
     }
 
@@ -176,12 +179,11 @@ public void processImage(){
     // }
 }
 
-// When the mouse is released we're done with the spring
+
 public void mouseReleased() {
-    robot.mouseReleased();
+//    robot.mouseReleased();
 }
 
-// When the mouse is pressed we. . .
 public void mousePressed() {
     for (Blob b : blobs) {
         if (b.size() > 500) {
@@ -216,6 +218,11 @@ public float distSq(float x1, float y1, float z1, float x2, float y2, float z2) 
   float d = (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) +(z2-z1)*(z2-z1);
   return d;
 }
+// Daniel Shiffman
+// http://codingtra.in
+// http://patreon.com/codingtrain
+// Code for: https://youtu.be/1scFcY-xMrI
+
 class Blob {
   float minx;
   float miny;
@@ -263,12 +270,6 @@ class Blob {
   }
 
   public boolean isNear(float x, float y) {
-
-    // The Rectangle "clamping" strategy
-    // float cx = max(min(x, maxx), minx);
-    // float cy = max(min(y, maxy), miny);
-    // float d = distSq(cx, cy, x, y);
-
     // Closest point in blob strategy
     float d = 10000000;
     for (PVector v : points) {
@@ -323,7 +324,7 @@ class Boundary {
     b.setUserData(this);
   }
 
-  // Draw the boundary, if it were at an angle we'd have to do something fancier
+  // Draw the boundary
   public void display() {
     fill(0);
     stroke(0);
@@ -336,7 +337,6 @@ class Boundary {
 
 class Box {
 
-  // We need to keep track of a Body and a width and height
   Body body;
   float w;
   float h;
@@ -780,7 +780,7 @@ class RobotArm {
 
     // When the mouse is released we're done with the spring
     public void mouseReleased() {
-        //spring.destroy();
+        spring.destroy();
     }
 
     // When the mouse is pressed we. . .

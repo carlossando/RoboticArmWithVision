@@ -36,7 +36,7 @@ class Boundary {
     b.setUserData(this);
   }
 
-  // Draw the boundary, if it were at an angle we'd have to do something fancier
+  // Draw the boundary
   void display() {
     fill(0);
     stroke(0);
