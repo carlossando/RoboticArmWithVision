@@ -27,10 +27,6 @@ Go to Sketch -> Import Library -> Add Library... and search for
 
 To install the proyect you can download the zip file or you can clone it
 
-    npm install https://github.com/carlossando/RoboticArmWithVision.git
-
-or
-
     $ git clone https://github.com/carlossando/RoboticArmWithVision.git
 
 ## Running the code
