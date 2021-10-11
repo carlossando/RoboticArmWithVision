@@ -54,11 +54,6 @@ To get the robotic arm to follow the blob, show the blob to the camera and click
 ![image](https://user-images.githubusercontent.com/29716233/136820710-db1de3d7-c7bf-4941-9eab-6a938aaf8843.png)
 
 
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code
-of conduct, and the process for submitting pull requests to us.
-
 ## Authors
 
   - **Carlos Sandoval Contreras** -
