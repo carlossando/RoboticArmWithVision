@@ -21,11 +21,11 @@ Requirements to be able to run de code
 
 Install processing 3.5.4 or the latest stable release, and open it.
 
-Go to Sketch -> Import Library -> Add Library... and search for
+To install the library go to Sketch -> Import Library -> Add Library... and search for
 
     Box2D for Processing
 
-To install the proyect you can download the zip file or you can clone it
+To install the project you can download the zip file or you can clone it
 
     $ git clone https://github.com/carlossando/RoboticArmWithVision.git
 
