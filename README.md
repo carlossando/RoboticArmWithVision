@@ -53,6 +53,9 @@ Once you got the parameters your are going to pass the to the next program. In t
      
 ![image](https://user-images.githubusercontent.com/29716233/136819330-5a16b9fe-c730-419b-9f74-377b25237f7e.png)
 
+To get the robotic arm to follow the blob, show the blob to the camera and click on the gripper, then you will be able to see the force vector and the robotic arm trying to follow the blob.
+
+![image](https://user-images.githubusercontent.com/29716233/136820710-db1de3d7-c7bf-4941-9eab-6a938aaf8843.png)
 
 
 ## Contributing
