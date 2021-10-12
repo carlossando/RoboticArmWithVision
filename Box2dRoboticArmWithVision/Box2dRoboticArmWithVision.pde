@@ -17,9 +17,9 @@ Capture video;
 
 //--------------------------
 //Blob parameters --> Set up this parametes based on the other program
-color trackColor = -10395354;
-float threshold = 10;
-float distThreshold = 80;
+color trackColor = -3978719;
+float threshold = 60;
+float distThreshold = 70;
 //--------------------------
 //keep a track of the blobs
 ArrayList<Blob> blobs = new ArrayList<Blob>();
@@ -72,7 +72,7 @@ void draw() {
     //Process the image before all
     processImage();
 
-    background(255);
+    background(200);
     //println(new Vec2(mouseX,mouseY));
 
     // We must always step through time!
