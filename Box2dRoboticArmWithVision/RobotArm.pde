@@ -20,20 +20,9 @@ class RobotArm {
     //Gripper
     Gripper gripper;
     boolean clawIsOpen = true;
-    PShape base, shoulder, upArm, loArm, end;
     //270,220,50
     RobotArm(float x, float y){
         links = new ArrayList<Link>();
-        // base = loadShape("r5.obj");
-        // shoulder = loadShape("r1.obj");
-        // upArm = loadShape("r2.obj");
-        // loArm = loadShape("r3.obj");
-        // end = loadShape("r4.obj");
-        
-        // base.disableStyle();
-        // shoulder.disableStyle();
-        // upArm.disableStyle();
-        // loArm.disableStyle();
         //Offsets between links
         Vec2 offset1 = new Vec2(0, -270/2 + 10);
         Vec2 offset2 = new Vec2(offset1.x + 220/2 - 10,offset1.y*2);
@@ -44,7 +33,6 @@ class RobotArm {
         links.add(new Link(x, y, 100, 40, true));
         links.add(new Link(x + offset1.x, y + offset1.y, 30, 270, false));
         links.add(new Link(x + offset2.x, y + offset2.y, 220, 25, false));
-        //links.add(new Link(x + offset3.x, y+offset3.y, 20, 70, false));
         gripper = new Gripper(x + offset3.x, y+offset3.y);
         links.add(new Link(x + offset4.x, y+offset4.y, 13, 70, false));
         links.add(new Link(x + offset5.x, y+offset5.y, 13, 70, false));
@@ -68,17 +56,20 @@ class RobotArm {
         offsetJoint4 = new Vec2(gripper.body.getWorldCenter().x  + box2d.scalarPixelsToWorld(30), gripper.body.getWorldCenter().y + box2d.scalarPixelsToWorld(-10));
         rjd5.initialize(gripper.body, links.get(4).body, offsetJoint4);
         
-        //gripper motors
-        rjd3.motorSpeed = PI;       // how fast?
-        rjd3.maxMotorTorque = 3000.0; // how powerful?
-        rjd3.enableMotor = true;      // is it on?
-        rjd4.motorSpeed = -PI*3;       // how fast?
-        rjd4.maxMotorTorque = 25000.0; // how powerful?
-        rjd4.enableMotor = true;      // is it on?
-        rjd5.motorSpeed = PI*3;       // how fast?
-        rjd5.maxMotorTorque = 25000.0; // how powerful?
-        rjd5.enableMotor = true;      // is it on?
-
+        //------------Motors------------
+        //gripper
+        rjd3.motorSpeed = PI;
+        rjd3.maxMotorTorque = 3000.0; 
+        rjd3.enableMotor = true;
+        //left claw  
+        rjd4.motorSpeed = -PI*3;      
+        rjd4.maxMotorTorque = 25000.0;
+        rjd4.enableMotor = true;
+        //right claw
+        rjd5.motorSpeed = PI*3;       
+        rjd5.maxMotorTorque = 25000.0; 
+        rjd5.enableMotor = true;      
+        //-------------------------------
         //Constrains
         rjd1.enableLimit = true;
         rjd1.lowerAngle = -PI/3;
@@ -118,12 +109,13 @@ class RobotArm {
         //draw the gripper
         gripper.display();
 
-        // Always alert the spring to the new mouse location
+        // Alert the spring to the new location
         //spring.update();
-        // Draw the spring (it only appears when active)
+        // Draw the spring
         spring.display();
     }
 
+    //Update the string location based on the tracked color blob
     void followColor(float x, float y){
         spring.update((600-x)*1.3,y);
     }
