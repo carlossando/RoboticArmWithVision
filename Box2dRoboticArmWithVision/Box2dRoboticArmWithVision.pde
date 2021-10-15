@@ -92,7 +92,10 @@ void draw() {
     }
     //Display the Play Box
     box.display();
-
+    
+    //Print Mouse coords
+    println("Mouse Coords: x= "+ mouseX + ", y= " + mouseY);
+    
     //Display the Text
     fill(0);
     text("Press the space bar to open and close the gripper",10,20);
