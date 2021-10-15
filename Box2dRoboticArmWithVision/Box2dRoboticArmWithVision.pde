@@ -15,6 +15,9 @@ import processing.video.*;
 //Video for image recognition
 Capture video;
 
+//Create an object to save info to a txt file
+PrintWriter output;
+
 //--------------------------
 //Blob parameters --> Set up this parametes based on the other program
 color trackColor = -3978719;
@@ -26,6 +29,7 @@ ArrayList<Blob> blobs = new ArrayList<Blob>();
 
 // A reference to our box2d world
 Box2DProcessing box2d;
+boolean recordingData;
 
 //List of our boundaries
 ArrayList<Boundary> boundaries;
@@ -56,6 +60,9 @@ void setup() {
     //Create the play Box
     box = new Box( 350, 325);
 
+    // Create a new file in the sketch directory
+    output = createWriter("dataset.txt"); 
+
     //Add a listener for collisions
     box2d.world.setContactListener(new CustomListener());
     
@@ -76,7 +83,9 @@ void draw() {
     //println(new Vec2(mouseX,mouseY));
 
     // We must always step through time!
-    box2d.step();
+    if (recordingData) {
+        box2d.step();   
+    }
 
     // Display all the boundaries
     for (Boundary wall: boundaries) {
@@ -93,8 +102,14 @@ void draw() {
     //Display the Play Box
     box.display();
     
-    //Print Mouse coords
-    println("Mouse Coords: x= "+ mouseX + ", y= " + mouseY);
+    if (recordingData) {
+        for (Blob b : blobs) {
+            if (b.size() > 500) {
+                Vec2 center = b.getCenter();
+                output.print("(" + center.x + "),(" + center.y + "),"); // Write the coordinate to the file
+            }
+        }
+    }
     
     //Display the Text
     fill(0);
@@ -156,7 +171,8 @@ void mouseReleased() {
 void mousePressed() {
     for (Blob b : blobs) {
         if (b.size() > 500) {
-        robot.mousePressed(b.minx, b.miny);
+            robot.mousePressed(b.minx, b.miny);
+            recordingData = !recordingData;
         }
     }
 }
@@ -172,6 +188,11 @@ void AddBoundaries(float x, float y, float _width, float _height){
 void keyPressed() {
     if (keyCode == 32) {
         robot.toggleMotor();
+        output.print("(ClawOperated),");
+    }else if (keyCode == 83) {
+        output.flush(); // Writes the remaining data to the file
+        output.close(); // Finishes the file
+        exit(); // Stops the program
     }
 }
 
