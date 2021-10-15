@@ -30,7 +30,6 @@ To install the project you can download the zip file or you can clone it
     $ git clone https://github.com/carlossando/RoboticArmWithVision.git
 
 ## Running the code
-### BloblDetectionWithColorGiver
 
 This code is going to be used to obtain the detection parameters of the color blob for our second program. 
 
@@ -49,9 +48,21 @@ Once you got the parameters your are going to pass the to the next program. In t
      
 ![image](https://user-images.githubusercontent.com/29716233/136819330-5a16b9fe-c730-419b-9f74-377b25237f7e.png)
 
-To get the robotic arm to follow the blob, show the blob to the camera and click on the gripper, then you will be able to see the force vector and the robotic arm trying to follow the blob.
+To get the robotic arm to follow the blob, **show the blob to the camera and _CLICK_ on the gripper, Once it is clicked the program will start**, then you will be able to see the force vector and the robotic arm trying to follow the blob, and the program will start recording data to a txt file.
 
 ![image](https://user-images.githubusercontent.com/29716233/136820710-db1de3d7-c7bf-4941-9eab-6a938aaf8843.png)
+
+## Recording data
+
+Once you´ve clicked on the gripper while showing the tracking object to the camera, you'll see everything start moving, and you will be able to control the robotic arm with the blob. The program will start recording the coordenates of the tracking object(blob) and will save the data in a text file called **dataset.txt**. **IT IS IMPORTANT TO END THE PROGRAM USING THE _"s"_ KEY**, to make sure it saves the dataset correctly.
+
+![image](https://user-images.githubusercontent.com/29716233/137501088-02b7c70f-de38-4fbb-b03b-88f01e723171.png)
+
+Once it is done, rename the file to something different if you dont want your data overwritten.
+
+The data should look somthing like this
+
+![image](https://user-images.githubusercontent.com/29716233/137501746-16890c9c-c689-4696-81f1-31641ec3874f.png)
 
 
 ## Authors
