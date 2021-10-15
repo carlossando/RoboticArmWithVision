@@ -1,3 +1,5 @@
 Box2dRoboticArmWithVision\.vscode
 Box2dRoboticArmWithVision\out
 *.txt
+*.java
+*.class
