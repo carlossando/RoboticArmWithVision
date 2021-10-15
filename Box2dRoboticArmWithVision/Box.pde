@@ -6,11 +6,14 @@ class Box {
   float w;
   float h;
   color col;
+  float x;
+  float y;
+  Vec2 pos;
 
   // Constructor
   Box(float x_, float y_) {
-    float x = x_;
-    float y = y_;
+    x = x_;
+    y = y_;
     w = 50;
     h = 50;
     // Add the box to the box2d world
@@ -45,7 +48,7 @@ class Box {
   // Drawing the box
   void display() {
     // We look at each body and get its screen position
-    Vec2 pos = box2d.getBodyPixelCoord(body);
+    pos = box2d.getBodyPixelCoord(body);
     // Get its angle of rotation
     float a = body.getAngle();
 
