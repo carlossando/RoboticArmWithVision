@@ -5,7 +5,7 @@ Kinematic 2D 2 link arm for pick and place controlled by a color blob detected b
 
 ## Getting Started
 
-Download the project and open it in processing 3.5.4, to be able to run the code, it is indispensable to have the Box2D library installed. 
+Download the project and open it in processing 3.5.4, to be able to run the code, it is indispensable to have the Box2D library and the Video library by The Processing foundation installed. 
 
 The project has two subprojects, the first one being the "BloblDetectionWithColorGiver", this code is to help you select the parameters for the object with which you plan to do the tracking.
 
@@ -21,9 +21,13 @@ Requirements to be able to run de code
 
 Install processing 3.5.4 or the latest stable release, and open it.
 
-To install the library go to Sketch -> Import Library -> Add Library... and search for
+To install the librarie go to Sketch -> Import Library -> Add Library... and search for
 
     Box2D for Processing
+
+and
+
+    Video The Processing Foundation
 
 To install the project you can download the zip file or you can clone it
 
