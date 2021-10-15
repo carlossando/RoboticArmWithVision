@@ -114,6 +114,7 @@ void draw() {
     //Display the Text
     fill(0);
     text("Press the space bar to open and close the gripper",10,20);
+    text("Press 'S' key to save the file and close the program",10,35);
 }
 
 void processImage(){
