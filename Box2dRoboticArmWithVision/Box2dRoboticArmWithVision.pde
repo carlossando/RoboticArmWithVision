@@ -62,7 +62,6 @@ void setup() {
 
     // Create a new file in the sketch directory
     output = createWriter("dataset.txt"); 
-
     //Add a listener for collisions
     box2d.world.setContactListener(new CustomListener());
     
@@ -106,7 +105,7 @@ void draw() {
         for (Blob b : blobs) {
             if (b.size() > 500) {
                 Vec2 center = b.getCenter();
-                output.print("Vec2(" + center.x + "),(" + center.y + "),"); // Write the coordinate to the file
+                output.print("Vec2(" + center.x + "," + center.y + "),"); // Write the coordinate to the file
             }
         }
     }
