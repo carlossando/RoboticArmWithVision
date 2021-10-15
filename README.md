@@ -60,6 +60,9 @@ Once you´ve clicked on the gripper while showing the tracking object to the cam
 
 Once it is done, rename the file to something different if you dont want your data overwritten.
 
+![image](https://user-images.githubusercontent.com/29716233/137501746-16890c9c-c689-4696-81f1-31641ec3874f.png)
+
+
 ## Authors
 
   - **Carlos Sandoval Contreras** -
