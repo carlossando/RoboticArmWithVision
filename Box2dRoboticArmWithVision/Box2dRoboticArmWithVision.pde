@@ -20,9 +20,9 @@ PrintWriter output;
 
 //--------------------------
 //Blob parameters --> Set up this parametes based on the other program
-color trackColor = -4675499; //Color parameter
-float threshold = 25;   //Color Threshold parameter
-float distThreshold = 85;   //distance threshold parameter
+color trackColor = -7297200; //Color parameter
+float threshold = 35;   //Color Threshold parameter
+float distThreshold = 50;   //distance threshold parameter
 //--------------------------
 //keep a track of the blobs
 ArrayList<Blob> blobs = new ArrayList<Blob>();
@@ -71,7 +71,7 @@ void setup() {
     box = new Box( 370, 325);
 
     // Create a new file in the sketch directory
-    output = createWriter("dataset.txt"); 
+    output = createWriter("data.txt"); 
     trackerPos = "{\"TrackerVectors\": [";
     cubePos = "\"CubeVectors\": [";
     claw = "\"ClawFunction\": [";
@@ -106,7 +106,7 @@ void draw() {
     //Display the Robot
     robot.display();
     for (Blob b : blobs) {
-        if (b.size() > 200) {
+        if (b.size() > 500) {
             Vec2 center = b.getCenter();
             robot.followColor(center.x,center.y);
         }
@@ -129,16 +129,7 @@ void draw() {
     }
 
     if (ellapsedTime > 30*1000) {
-        trackerPos = trackerPos.substring(0,trackerPos.length()-1);
-        cubePos = cubePos.substring(0,cubePos.length()-1);
-        claw = claw.substring(0,claw.length()-1);
-        output.print(trackerPos + "],");
-        output.print(cubePos + "],");
-        output.print(claw + "],");
-        output.print("\"TimeEllapsed\":" + ellapsedTime + ",\"Exitoso\":" + exitoso + "}");
-        output.flush(); // Writes the remaining data to the file
-        output.close(); // Finishes the file
-        exit(); // Stops the program
+        saveAndClose();
     }
     //Display the Text
     fill(0);
@@ -194,7 +185,7 @@ void mouseReleased() {
 
 void mousePressed() {
     for (Blob b : blobs) {
-        if (b.size() > 200) {
+        if (b.size() > 500) {
             robot.mousePressed(b.minx, b.miny);
             recordingData = !recordingData;
             startTime = millis();
@@ -216,17 +207,31 @@ void keyPressed() {
         robot.toggleMotor();
         claw += "{\"Function\":" + robot.clawIsOpen + ",\"time\":" + ellapsedTime + "},";
     }else if (keyCode == 83) {
-        trackerPos = trackerPos.substring(0,trackerPos.length()-1);
-        cubePos = cubePos.substring(0,cubePos.length()-1);
-        claw = claw.substring(0,claw.length()-1);
-        output.print(trackerPos + "],");
-        output.print(cubePos + "],");
-        output.print(claw + "],");
-        output.print("\"TimeEllapsed\":" + ellapsedTime + ",\"Exitoso\":" + exitoso + "}");
-        output.flush(); // Writes the remaining data to the file
-        output.close(); // Finishes the file
-        exit(); // Stops the program
+        saveAndClose();
     }
+}
+
+void saveAndClose(){
+        //trackerPos = trackerPos.substring(0,trackerPos.length()-1);
+        //cubePos = cubePos.substring(0,cubePos.length()-1);
+        //claw = claw.substring(0,claw.length()-1);
+        print(trackerPos+ "],");
+        print(cubePos + "],");
+        print(claw + "],");
+        print("\"TimeEllapsed\":" + ellapsedTime + ",\"Exitoso\":" + exitoso + "}");
+        output.print(trackerPos + "],");
+        delay(500);
+        output.print(cubePos + "],");
+        delay(500);
+        output.print(claw + "],");
+        delay(500);
+        output.print("\"TimeEllapsed\":" + ellapsedTime + ",\"Exitoso\":" + exitoso + "}");
+        delay(500);
+        output.flush(); // Writes the remaining data to the file
+        delay(1000);
+        output.close(); // Finishes the file
+        delay(500);
+        exit(); // Stops the program
 }
 
 
