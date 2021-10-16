@@ -20,9 +20,9 @@ PrintWriter output;
 
 //--------------------------
 //Blob parameters --> Set up this parametes based on the other program
-color trackColor = -4675499;
-float threshold = 15;
-float distThreshold = 85;
+color trackColor = -4675499; //Color parameter
+float threshold = 25;   //Color Threshold parameter
+float distThreshold = 85;   //distance threshold parameter
 //--------------------------
 //keep a track of the blobs
 ArrayList<Blob> blobs = new ArrayList<Blob>();
@@ -68,7 +68,7 @@ void setup() {
     //Create the Robot
     robot = new RobotArm(270,405);
     //Create the play Box
-    box = new Box( 350, 325);
+    box = new Box( 370, 325);
 
     // Create a new file in the sketch directory
     output = createWriter("dataset.txt"); 
@@ -129,8 +129,12 @@ void draw() {
     }
 
     if (ellapsedTime > 30*1000) {
+        trackerPos = trackerPos.substring(0,trackerPos.length()-1);
+        cubePos = cubePos.substring(0,cubePos.length()-1);
+        claw = claw.substring(0,claw.length()-1);
         output.print(trackerPos + "],");
         output.print(cubePos + "],");
+        output.print(claw + "],");
         output.print("\"TimeEllapsed\":" + ellapsedTime + ",\"Exitoso\":" + exitoso + "}");
         output.flush(); // Writes the remaining data to the file
         output.close(); // Finishes the file
@@ -181,13 +185,6 @@ void processImage(){
             }
         }
     }
-
-    // for (Blob b : blobs) {
-    //     if (b.size() > 500) {
-    //     //b.show();
-    //     println("blob center: "+ b.minx + " " + b.miny);
-    //     }
-    // }
 }
 
 
