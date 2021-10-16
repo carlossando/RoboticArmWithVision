@@ -89,7 +89,7 @@ class Box {
     //body.setMassFromShapes();
 
     // Give it some initial random velocity
-    body.setLinearVelocity(new Vec2(random(4, 5), random(0, 1)));
+    //body.setLinearVelocity(new Vec2(random(4, 5), random(0, 1)));
   }
 
 }
