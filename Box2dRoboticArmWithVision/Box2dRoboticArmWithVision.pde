@@ -125,10 +125,10 @@ void draw() {
     }
     //Time
     if (timerOn) {
-        ellapsedTime = (millis() - startTime)/1000;
+        ellapsedTime = (millis() - startTime);
     }
 
-    if (ellapsedTime > 30) {
+    if (ellapsedTime > 30*1000) {
         output.print(trackerPos + "],");
         output.print(cubePos + "],");
         output.print("\"TimeEllapsed\":" + ellapsedTime + ",\"Exitoso\":" + exitoso + "}");
@@ -140,7 +140,7 @@ void draw() {
     fill(0);
     text("Press the space bar to open and close the gripper",10,20);
     text("Press 'S' key to save the file and close the program",10,35);
-    text("Ellapsed Time= " + ellapsedTime, 10,50);
+    text("Ellapsed Time= " + ellapsedTime + " ms", 10,50);
 }
 
 void processImage(){
