@@ -17,7 +17,7 @@ The second subproject is the robotic arm, once the parameters are passed to the 
 Requirements to be able to run de code
 - [Processing 3.5.4](https://processing.org/)
 - [Box2d for processing](https://github.com/shiffman/Box2D-for-Processing)
-- [Video The Processing Foundation]
+- [Video The Processing Foundation](https://processing.org/reference/libraries/video/index.html)
 
 ### Installing
 
