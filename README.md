@@ -1,5 +1,6 @@
 # Pick and Place Vision-Guided Robotic Arm
 Kinematic 2D 2 link arm for pick and place controlled by a color blob detected by an Image processing algorithm.
+The program is modified to record the data: the tracker imput, the block position and the gripper state, this in order to create a dataset to train a machine learning algorithm( work in progress).
 
 ![image](https://user-images.githubusercontent.com/29716233/136808799-4d03863d-6508-4bb3-a105-9fadffd595cb.png)
 
@@ -16,6 +17,7 @@ The second subproject is the robotic arm, once the parameters are passed to the 
 Requirements to be able to run de code
 - [Processing 3.5.4](https://processing.org/)
 - [Box2d for processing](https://github.com/shiffman/Box2D-for-Processing)
+- [Video The Processing Foundation]
 
 ### Installing
 
@@ -59,15 +61,29 @@ To get the robotic arm to follow the blob, **show the blob to the camera and _CL
 ## Recording data
 
 Once you´ve clicked on the gripper while showing the tracking object to the camera, you'll see everything start moving, and you will be able to control the robotic arm with the blob. The program will start recording the coordenates of the tracking object(blob) and will save the data in a text file called **dataset.txt**. **IT IS IMPORTANT TO END THE PROGRAM USING THE _"s"_ KEY**, to make sure it saves the dataset correctly.
+Else the program will end after 30 seconds of running, this step was done so as not to make the dataset too large.
+
+#### Objective!
+
+The objective is to try to grab the cube, and leave it inside the hole in less than 30 seconds.
+
+#### Save data
+
+The data will be saved in the same directory as the project as shown below.
 
 ![image](https://user-images.githubusercontent.com/29716233/137501088-02b7c70f-de38-4fbb-b03b-88f01e723171.png)
 
 Once it is done, rename the file to something different if you dont want your data overwritten.
 
-The data should look somthing like this
+The data is saved as a Json file, so everything is structured and easy to read, and we can feed our machine learning algorith more easily. It should look something like this:
 
-![image](https://user-images.githubusercontent.com/29716233/137501746-16890c9c-c689-4696-81f1-31641ec3874f.png)
+![image](https://user-images.githubusercontent.com/29716233/137568897-2431bacc-60ef-49a7-8fd2-af2286387105.png)
 
+The Json Structure is as follows:
+
+![image](https://user-images.githubusercontent.com/29716233/137569024-e7c36c0a-0124-4b11-83d6-e42c48453a24.png)
+
+**The actual data contains more than 500 values per list, this was just to ilustrate the json format**
 
 ## Authors
 
