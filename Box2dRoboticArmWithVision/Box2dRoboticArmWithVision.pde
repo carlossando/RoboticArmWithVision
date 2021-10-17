@@ -20,9 +20,9 @@ PrintWriter output;
 
 //--------------------------
 //Blob parameters --> Set up this parametes based on the other program
-color trackColor = -7297200; //Color parameter
-float threshold = 35;   //Color Threshold parameter
-float distThreshold = 50;   //distance threshold parameter
+color trackColor = -13093786; //Color parameter
+float threshold = 20;   //Color Threshold parameter
+float distThreshold = 60;   //distance threshold parameter
 //--------------------------
 //keep a track of the blobs
 ArrayList<Blob> blobs = new ArrayList<Blob>();
@@ -71,7 +71,7 @@ void setup() {
     box = new Box( 370, 325);
 
     // Create a new file in the sketch directory
-    output = createWriter("data.txt"); 
+    output = createWriter("data.json"); 
     trackerPos = "{\"TrackerVectors\": [";
     cubePos = "\"CubeVectors\": [";
     claw = "\"ClawFunction\": [";
@@ -220,17 +220,11 @@ void saveAndClose(){
         print(claw + "],");
         print("\"TimeEllapsed\":" + ellapsedTime + ",\"Exitoso\":" + exitoso + "}");
         output.print(trackerPos + "],");
-        delay(500);
         output.print(cubePos + "],");
-        delay(500);
         output.print(claw + "],");
-        delay(500);
         output.print("\"TimeEllapsed\":" + ellapsedTime + ",\"Exitoso\":" + exitoso + "}");
-        delay(500);
         output.flush(); // Writes the remaining data to the file
-        delay(1000);
         output.close(); // Finishes the file
-        delay(500);
         exit(); // Stops the program
 }
 
