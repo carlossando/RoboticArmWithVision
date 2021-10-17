@@ -212,13 +212,13 @@ void keyPressed() {
 }
 
 void saveAndClose(){
-        //trackerPos = trackerPos.substring(0,trackerPos.length()-1);
-        //cubePos = cubePos.substring(0,cubePos.length()-1);
-        //claw = claw.substring(0,claw.length()-1);
-        print(trackerPos+ "],");
-        print(cubePos + "],");
-        print(claw + "],");
-        print("\"TimeEllapsed\":" + ellapsedTime + ",\"Exitoso\":" + exitoso + "}");
+        trackerPos = trackerPos.substring(0,trackerPos.length()-1);
+        cubePos = cubePos.substring(0,cubePos.length()-1);
+        claw = claw.substring(0,claw.length()-1);
+        //print(trackerPos+ "],");
+        //print(cubePos + "],");
+        //print(claw + "],");
+        //print("\"TimeEllapsed\":" + ellapsedTime + ",\"Exitoso\":" + exitoso + "}");
         output.print(trackerPos + "],");
         output.print(cubePos + "],");
         output.print(claw + "],");
