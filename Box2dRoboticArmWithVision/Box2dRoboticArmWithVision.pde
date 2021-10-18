@@ -18,9 +18,10 @@ ArrayList<Vec2> trackerPosArr = new ArrayList<Vec2>();
 FloatList gripperTimeArr = new FloatList();
 //file
 String filenamebase = "data";
-int fileNum = 12;
+int fileNum = 201;
 String extension = ".json";
 String file = filenamebase + fileNum + extension;
+int maxNumFiles = 373;
 
 int readingVal = 0;
 // A reference to our box2d world
@@ -148,21 +149,22 @@ void draw() {
 }
 
 void RestartApp(){
-    fileNum++;
-    file = filenamebase + fileNum + extension;
-    readingVal = 0;
-    trackerPosArr.clear();
-    gripperTimeArr.clear();
-    robot.killBody();
-    box.killBody();
-    // Create the Robot
-    robot = new RobotArm(270,405);
-    // Create the play Box
-    box = new Box( 370, 325);
-    jsonLoader();
-    ellapsedTime=0;
-    //playingData = true;
-    //timerOn = true;
+    if(fileNum < maxNumFiles){
+        fileNum++;
+        file = filenamebase + fileNum + extension;
+        readingVal = 0;
+        trackerPosArr.clear();
+        gripperTimeArr.clear();
+        robot.killBody();
+        box.killBody();
+        // Create the Robot
+        robot = new RobotArm(270,405);
+        // Create the play Box
+        box = new Box( 370, 325);
+        jsonLoader();
+        ellapsedTime=0;
+        mousePressed();
+    }
 }
 
 void mouseReleased() {
@@ -174,7 +176,7 @@ void mousePressed() {
         playingData = true;
         startTime = millis();
         timerOn= true;
-        robot.mousePressed(480, 181);
+        robot.mousePressed(470, 175);
     }
 }
 
