@@ -12,24 +12,14 @@ import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
 import processing.video.*;
 
-//Video for image recognition
-Capture video;
+//Json reader
+JSONArray values;
 
-//Create an object to save info to a txt file
-PrintWriter output;
-
-//--------------------------
-//Blob parameters --> Set up this parametes based on the other program
-color trackColor = -13093786; //Color parameter
-float threshold = 20;   //Color Threshold parameter
-float distThreshold = 60;   //distance threshold parameter
-//--------------------------
-//keep a track of the blobs
-ArrayList<Blob> blobs = new ArrayList<Blob>();
-
+ArrayList<Vec2> trackerPosArr = new ArrayList<Vec2>();
+int readingVal = 0;
 // A reference to our box2d world
 Box2DProcessing box2d;
-boolean recordingData;
+boolean playingData;
 
 //List of our boundaries
 ArrayList<Boundary> boundaries;
@@ -45,11 +35,6 @@ float floorVal[] = {540, 425 ,80 ,50};
 boolean timerOn = false;
 long startTime = 0;
 long ellapsedTime = 0;
-
-boolean exitoso = false;
-String trackerPos;
-String cubePos;
-String claw;
 
 void setup() {
     size(1200, 800);
@@ -69,33 +54,33 @@ void setup() {
     robot = new RobotArm(270,405);
     //Create the play Box
     box = new Box( 370, 325);
-
-    // Create a new file in the sketch directory
-    output = createWriter("data.json"); 
-    trackerPos = "{\"TrackerVectors\": [";
-    cubePos = "\"CubeVectors\": [";
-    claw = "\"ClawFunction\": [";
+    
     //Add a listener for collisions
     box2d.world.setContactListener(new CustomListener());
     
-    //Video processing
-    video = new Capture(this,"pipeline:autovideosrc");
-    video.start();
+    //load Json file
+    jsonLoader();
 }
 
-void captureEvent(Capture video) {
-  video.read();
+void jsonLoader(){
+    values = loadJSONArray("data1.json");
+    JSONArray tempPosArr = values.getJSONArray(0);
+    for (int i = 0; i < tempPosArr.size(); i++) {
+        JSONObject item = tempPosArr.getJSONObject(i); 
+        Vec2 center = new Vec2();
+        center.x = item.getInt("x");
+        center.y = item.getInt("y");
+        trackerPosArr.add(center);
+    }
+    //println(trackerPosArr);
 }
 
 void draw() {
-    //Process the image before all
-    processImage();
-
     background(200);
     //println(new Vec2(mouseX,mouseY));
 
     // We must always step through time!
-    if (recordingData) {
+    if (playingData) {
         box2d.step();   
     }
 
@@ -105,92 +90,48 @@ void draw() {
     }
     //Display the Robot
     robot.display();
-    for (Blob b : blobs) {
-        if (b.size() > 500) {
-            Vec2 center = b.getCenter();
-            robot.followColor(center.x,center.y);
-        }
+
+    if (playingData) {
+        robot.followColor(trackerPosArr.get(readingVal).x,trackerPosArr.get(readingVal).y);
+        readingVal++;
     }
+
+    if (trackerPosArr.size() == readingVal) {
+        playingData = false;
+    }
+
     //Display the Play Box
     box.display();
-    
-    if (recordingData) {
-        for (Blob b : blobs) {
-            if (b.size() > 500) {
-                Vec2 center = b.getCenter();
-                trackerPos += "{\"x\":" + center.x + ",\"y\":" + center.y + "},";
-                cubePos += "{\"x\":" + box.pos.x + ",\"y\":" + box.pos.y + "},";
-            }
-        }
-    }
+
     //Time
     if (timerOn) {
         ellapsedTime = (millis() - startTime);
     }
 
-    if (ellapsedTime > 30*1000) {
-        saveAndClose();
-    }
     //Display the Text
     fill(0);
-    text("Press the space bar to open and close the gripper",10,20);
-    text("Press 'S' key to save the file and close the program",10,35);
-    text("Ellapsed Time= " + ellapsedTime + " ms", 10,50);
+    text("Ellapsed Time= " + ellapsedTime + " ms", 10,10);
 }
-
-void processImage(){
-    video.loadPixels();
-    //image(video, 0, 0);
-    blobs.clear();
-
-    // Begin loop to walk through every pixel
-    for (int x = 0; x < video.width; x++ ) {
-        for (int y = 0; y < video.height; y++ ) {
-            int loc = x + y * video.width;
-            // What is current color
-            color currentColor = video.pixels[loc];
-            float r1 = red(currentColor);
-            float g1 = green(currentColor);
-            float b1 = blue(currentColor);
-            float r2 = red(trackColor);
-            float g2 = green(trackColor);
-            float b2 = blue(trackColor);
-
-            float d = distSq(r1, g1, b1, r2, g2, b2); 
-
-            if (d < threshold*threshold) {
-
-                boolean found = false;
-                for (Blob b : blobs) {
-                if (b.isNear(x, y)) {
-                    b.add(x, y);
-                    found = true;
-                    break;
-                }
-                }
-
-                if (!found) {
-                    Blob b = new Blob(x, y);
-                    blobs.add(b);
-                }
-            }
-        }
-    }
-}
-
 
 void mouseReleased() {
 //    robot.mouseReleased();
 }
 
 void mousePressed() {
-    for (Blob b : blobs) {
-        if (b.size() > 500) {
-            robot.mousePressed(b.minx, b.miny);
-            recordingData = !recordingData;
-            startTime = millis();
-            timerOn= true;
-        }
+    // for (Blob b : blobs) {
+    //     if (b.size() > 500) {
+    //         robot.mousePressed(b.minx, b.miny);
+    //         startTime = millis();
+    //         timerOn= true;
+    //     }
+    // }
+    
+    if (!playingData) {
+        playingData = true;
+        startTime = millis();
+        timerOn= true;
+        robot.mousePressed(480, 181);
+        //robot.mousePressed(robot.gripper.body.getWorldCenter().x,robot.gripper.body.getWorldCenter().y);
     }
 }
 
@@ -205,38 +146,7 @@ void AddBoundaries(float x, float y, float _width, float _height){
 void keyPressed() {
     if (keyCode == 32) {
         robot.toggleMotor();
-        claw += "{\"Function\":" + robot.clawIsOpen + ",\"time\":" + ellapsedTime + "},";
     }else if (keyCode == 83) {
-        saveAndClose();
+        
     }
-}
-
-void saveAndClose(){
-        trackerPos = trackerPos.substring(0,trackerPos.length()-1);
-        cubePos = cubePos.substring(0,cubePos.length()-1);
-        claw = claw.substring(0,claw.length()-1);
-        //print(trackerPos+ "],");
-        //print(cubePos + "],");
-        //print(claw + "],");
-        //print("\"TimeEllapsed\":" + ellapsedTime + ",\"Exitoso\":" + exitoso + "}");
-        output.print(trackerPos + "],");
-        output.print(cubePos + "],");
-        output.print(claw + "],");
-        output.print("\"TimeEllapsed\":" + ellapsedTime + ",\"Exitoso\":" + exitoso + "}");
-        output.flush(); // Writes the remaining data to the file
-        output.close(); // Finishes the file
-        exit(); // Stops the program
-}
-
-
-// Custom distance functions w/ no square root for optimization
-float distSq(float x1, float y1, float x2, float y2) {
-  float d = (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1);
-  return d;
-}
-
-
-float distSq(float x1, float y1, float z1, float x2, float y2, float z2) {
-  float d = (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) +(z2-z1)*(z2-z1);
-  return d;
 }
