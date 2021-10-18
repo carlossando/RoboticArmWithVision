@@ -115,6 +115,14 @@ class RobotArm {
         spring.display();
     }
 
+   // This function removes the particle from the box2d world
+  void killBody() {
+    for (Link l: links) {
+        box2d.destroyBody(l.body);
+    }
+    box2d.destroyBody(gripper.body);
+  }
+
     //Update the string location based on the tracked color blob
     void followColor(float x, float y){
         spring.update((600-x)*1.3,y);
