@@ -127,11 +127,10 @@ class RobotArm {
 
     // When the mouse is pressed we. . .
     void mousePressed(float x, float y) {
-        // Check to see if the mouse was clicked on the box
-        if (gripper.contains(mouseX, mouseY)) {
-            // And if so, bind the mouse location to the box with a spring
-            spring.bind(mouseX,mouseY,gripper.body);
-        }
+        
+        // And if so, bind the mouse location to the box with a spring
+        spring.bind(x,y,gripper.body);
+        
     }
 
     // Turn the motor on or off

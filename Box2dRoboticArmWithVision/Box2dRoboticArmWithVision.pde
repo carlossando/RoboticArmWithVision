@@ -20,9 +20,9 @@ PrintWriter output;
 
 //--------------------------
 //Blob parameters --> Set up this parametes based on the other program
-color trackColor = -13093786; //Color parameter
-float threshold = 20;   //Color Threshold parameter
-float distThreshold = 60;   //distance threshold parameter
+color trackColor = -2924995; //Color parameter
+float threshold = 55;   //Color Threshold parameter
+float distThreshold = 20;   //distance threshold parameter
 //--------------------------
 //keep a track of the blobs
 ArrayList<Blob> blobs = new ArrayList<Blob>();
@@ -186,7 +186,7 @@ void mouseReleased() {
 void mousePressed() {
     for (Blob b : blobs) {
         if (b.size() > 500) {
-            robot.mousePressed(b.minx, b.miny);
+            robot.mousePressed(470, 175);
             recordingData = !recordingData;
             startTime = millis();
             timerOn= true;
