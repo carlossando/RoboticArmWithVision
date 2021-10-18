@@ -13,9 +13,15 @@ import org.jbox2d.dynamics.*;
 import processing.video.*;
 
 //Json reader
-JSONArray values;
-
+JSONObject values;
 ArrayList<Vec2> trackerPosArr = new ArrayList<Vec2>();
+FloatList gripperTimeArr = new FloatList();
+//file
+String filenamebase = "data";
+int fileNum = 12;
+String extension = ".json";
+String file = filenamebase + fileNum + extension;
+
 int readingVal = 0;
 // A reference to our box2d world
 Box2DProcessing box2d;
@@ -35,6 +41,9 @@ float floorVal[] = {540, 425 ,80 ,50};
 boolean timerOn = false;
 long startTime = 0;
 long ellapsedTime = 0;
+
+long timedonems = 0;
+boolean timedone = true;
 
 void setup() {
     size(1200, 800);
@@ -63,8 +72,9 @@ void setup() {
 }
 
 void jsonLoader(){
-    values = loadJSONArray("data1.json");
-    JSONArray tempPosArr = values.getJSONArray(0);
+    values = loadJSONObject(file);
+    //Get Tracked Vectors
+    JSONArray tempPosArr = values.getJSONArray("TrackerVectors");
     for (int i = 0; i < tempPosArr.size(); i++) {
         JSONObject item = tempPosArr.getJSONObject(i); 
         Vec2 center = new Vec2();
@@ -72,7 +82,14 @@ void jsonLoader(){
         center.y = item.getInt("y");
         trackerPosArr.add(center);
     }
-    //println(trackerPosArr);
+    //Get Gripper Values
+    JSONArray tempGripperArr = values.getJSONArray("ClawFunction");
+    for (int i = 0; i < tempGripperArr.size(); i++) {
+        JSONObject item = tempGripperArr.getJSONObject(i);
+        //gripperFuncArr.add(item.getInt("Function"));
+        gripperTimeArr.append(item.getInt("time"));
+    }
+    //println(gripperTimeArr);
 }
 
 void draw() {
@@ -96,8 +113,25 @@ void draw() {
         readingVal++;
     }
 
+    for (float f : gripperTimeArr) {
+        if (f > ellapsedTime-17 && f < ellapsedTime+50 && timedone == true) {
+            robot.toggleMotor();
+            timedone = false;
+            timedonems = ellapsedTime;
+        }
+    }
+    
+    if (timedone == false) {
+        if (ellapsedTime > timedonems+80) {
+            timedone = true;
+        }
+    }
+
     if (trackerPosArr.size() == readingVal) {
         playingData = false;
+        timerOn = false;
+        delay(1000);
+        RestartApp();
     }
 
     //Display the Play Box
@@ -107,10 +141,28 @@ void draw() {
     if (timerOn) {
         ellapsedTime = (millis() - startTime);
     }
-
     //Display the Text
     fill(0);
     text("Ellapsed Time= " + ellapsedTime + " ms", 10,10);
+    text("Reading file data" + fileNum, 10,30);
+}
+
+void RestartApp(){
+    fileNum++;
+    file = filenamebase + fileNum + extension;
+    readingVal = 0;
+    trackerPosArr.clear();
+    gripperTimeArr.clear();
+    robot.killBody();
+    box.killBody();
+    // Create the Robot
+    robot = new RobotArm(270,405);
+    // Create the play Box
+    box = new Box( 370, 325);
+    jsonLoader();
+    ellapsedTime=0;
+    //playingData = true;
+    //timerOn = true;
 }
 
 void mouseReleased() {
@@ -118,20 +170,11 @@ void mouseReleased() {
 }
 
 void mousePressed() {
-    // for (Blob b : blobs) {
-    //     if (b.size() > 500) {
-    //         robot.mousePressed(b.minx, b.miny);
-    //         startTime = millis();
-    //         timerOn= true;
-    //     }
-    // }
-    
     if (!playingData) {
         playingData = true;
         startTime = millis();
         timerOn= true;
         robot.mousePressed(480, 181);
-        //robot.mousePressed(robot.gripper.body.getWorldCenter().x,robot.gripper.body.getWorldCenter().y);
     }
 }
 
