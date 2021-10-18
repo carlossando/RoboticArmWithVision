@@ -18,7 +18,7 @@ ArrayList<Vec2> trackerPosArr = new ArrayList<Vec2>();
 FloatList gripperTimeArr = new FloatList();
 //file
 String filenamebase = "data";
-int fileNum = 201;
+int fileNum = 1;
 String extension = ".json";
 String file = filenamebase + fileNum + extension;
 int maxNumFiles = 373;
