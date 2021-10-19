@@ -1,4 +1,6 @@
-# Pick and Place Vision-Guided Robotic Arm
+# Pick and Place Vision-Guided Robotic Arm (Playground)
+**This is one of 3 branches, this branch is the main app, the playground, you can only play in this branch, if you want to record data go to the "Recorder App" branch, else if you want to playback your recording, go to "Recorder App" branch.**
+
 Kinematic 2D 2 link arm for pick and place controlled by a color blob detected by an Image processing algorithm.
 
 ![image](https://user-images.githubusercontent.com/29716233/136808799-4d03863d-6508-4bb3-a105-9fadffd595cb.png)
