@@ -1,4 +1,7 @@
-# Pick and Place Vision-Guided Robotic Arm
+# Pick and Place Vision-Guided Robotic Arm (Recorder App)
+
+**This is one of 3 branches, this branch is the Recorder app, you can do your runs in this branch and the program will record all the necesary data to train a machine learning algorithm (not yet implemented), if you want to playback your recording, go to "Recorder App" branch, else if you only want to play with the physics go to the "Playground app" branch.**
+
 Kinematic 2D 2 link arm for pick and place controlled by a color blob detected by an Image processing algorithm.
 The program is modified to record the data: the tracker imput, the block position and the gripper state, this in order to create a dataset to train a machine learning algorithm( work in progress).
 
@@ -54,7 +57,7 @@ Once you got the parameters your are going to pass the to the next program. In t
      
 ![image](https://user-images.githubusercontent.com/29716233/136819330-5a16b9fe-c730-419b-9f74-377b25237f7e.png)
 
-To get the robotic arm to follow the blob, **show the blob to the camera and _CLICK_ on the gripper, Once it is clicked the program will start**, then you will be able to see the force vector and the robotic arm trying to follow the blob, and the program will start recording data to a txt file.
+To get the robotic arm to follow the blob, **show the blob to the camera and _CLICK_ anywhere on the screen, Once it is clicked the program will start**, then you will be able to see the force vector and the robotic arm trying to follow the blob, and the program will start recording data to a txt file.
 
 ![image](https://user-images.githubusercontent.com/29716233/136820710-db1de3d7-c7bf-4941-9eab-6a938aaf8843.png)
 
