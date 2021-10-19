@@ -18,10 +18,10 @@ ArrayList<Vec2> trackerPosArr = new ArrayList<Vec2>();
 FloatList gripperTimeArr = new FloatList();
 //file
 String filenamebase = "data";
-int fileNum = 374;
+int fileNum = 1;
 String extension = ".json";
 String file = filenamebase + fileNum + extension;
-int maxNumFiles = 400;
+int maxNumFiles = 410;
 
 int readingVal = 0;
 // A reference to our box2d world
