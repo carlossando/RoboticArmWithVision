@@ -1,16 +1,15 @@
-# Pick and Place Vision-Guided Robotic Arm
-Kinematic 2D 2 link arm for pick and place controlled by a color blob detected by an Image processing algorithm.
-The program is modified to record the data: the tracker imput, the block position and the gripper state, this in order to create a dataset to train a machine learning algorithm( work in progress).
+# Pick and Place Vision-Guided Robotic Arm (Playback Reocrding Data)
 
-![image](https://user-images.githubusercontent.com/29716233/136808799-4d03863d-6508-4bb3-a105-9fadffd595cb.png)
+**This is one of 3 branches, this branch is the playback-recordings, just for visualizing the data, if you want to record data go to the "Recorder App" branch, else if you want to play with the physics, go to "Playground App" branch.**
+
+Kinematic 2D 2 link arm for pick and place controlled by a color blob detected by an Image processing algorithm.
+The program is modified to play the data: This program will only play back the runs you did in the "recording-app" branch, for that, you must save the data in a folder and export it to the folder named "data" in the workspace.
+
+![image](https://user-images.githubusercontent.com/29716233/137936486-9e31cea9-9680-484d-b4c4-87a1b4800974.png)
 
 ## Getting Started
 
 Download the project and open it in processing 3.5.4, to be able to run the code, it is indispensable to have the Box2D library and the Video library by The Processing foundation installed. 
-
-The project has two subprojects, the first one being the "BloblDetectionWithColorGiver", this code is to help you select the parameters for the object with which you plan to do the tracking.
-
-The second subproject is the robotic arm, once the parameters are passed to the main tab ("Box2dRoboticArmWithVision"), the program is ready to use.
 
 ### Prerequisites
 
@@ -37,53 +36,22 @@ To install the project you can download the zip file or you can clone it
 
 ## Running the code
 
-This code is going to be used to obtain the detection parameters of the color blob for our second program. 
+First you must have recorded some previous data from the "Recorder App" branch, and stored it in a safe place. Then you must export the .JSON files to this workspace inside a folder called data.
 
-Once you run the program, you will press the color you want to track with the mouse. To adjust the parameters you will use A and Z for the distance threshold, and S and X for the color threshold. Your target is to find a single blob that doesnt fluctuate. These parameters will vary depending on the background, lighting, etc.
+![image](https://user-images.githubusercontent.com/29716233/137937000-582e1e61-ad3a-42e4-bb00-febbbc4a74a3.png)
 
+![image](https://user-images.githubusercontent.com/29716233/137937140-acfda9e2-8c69-4cc0-829d-e3c9f7459e6d.png)
 
-![image](https://user-images.githubusercontent.com/29716233/136818668-fed2a0e8-d0f9-4e92-a2eb-85e35b014bc3.png)
+Make sure to number the files in ascending order starting with the number 1 and in the format of "data#" so the program can read everything successfully.
 
-Once you got the parameters your are going to pass the to the next program. In this case the parameters are:
+After you have done that, make sure to modify the line 24 of the main program "Box2dRoboticArmWithVision.pde" with the number of files your program has.
 
-     Color: -13280642  //Given in the Console
-     
-     Distance Threshold: 50  //Given in the Console or in the top right area of the screen
-     
-     Color Threshold: 40 //Given in the Console or in the top right area of the screen
-     
-![image](https://user-images.githubusercontent.com/29716233/136819330-5a16b9fe-c730-419b-9f74-377b25237f7e.png)
+![image](https://user-images.githubusercontent.com/29716233/137937969-1be76bfc-2193-42d2-b1ad-9f03fa7e862c.png)
 
-To get the robotic arm to follow the blob, **show the blob to the camera and _CLICK_ on the gripper, Once it is clicked the program will start**, then you will be able to see the force vector and the robotic arm trying to follow the blob, and the program will start recording data to a txt file.
+## To start running the recordings
+Finally you are ready to run the program, just play start, and **press anywhere in the screen.**
 
-![image](https://user-images.githubusercontent.com/29716233/136820710-db1de3d7-c7bf-4941-9eab-6a938aaf8843.png)
-
-## Recording data
-
-Once you´ve clicked on the gripper while showing the tracking object to the camera, you'll see everything start moving, and you will be able to control the robotic arm with the blob. The program will start recording the coordenates of the tracking object(blob) and will save the data in a text file called **dataset.txt**. **IT IS IMPORTANT TO END THE PROGRAM USING THE _"s"_ KEY**, to make sure it saves the dataset correctly.
-Else the program will end after 30 seconds of running, this step was done so as not to make the dataset too large.
-
-#### Objective!
-
-The objective is to try to grab the cube, and leave it inside the hole in less than 30 seconds.
-
-#### Save data
-
-The data will be saved in the same directory as the project as shown below.
-
-![image](https://user-images.githubusercontent.com/29716233/137501088-02b7c70f-de38-4fbb-b03b-88f01e723171.png)
-
-Once it is done, rename the file to something different if you dont want your data overwritten.
-
-The data is saved as a Json file, so everything is structured and easy to read, and we can feed our machine learning algorith more easily. It should look something like this:
-
-![image](https://user-images.githubusercontent.com/29716233/137568897-2431bacc-60ef-49a7-8fd2-af2286387105.png)
-
-The Json Structure is as follows:
-
-![image](https://user-images.githubusercontent.com/29716233/137569024-e7c36c0a-0124-4b11-83d6-e42c48453a24.png)
-
-**The actual data contains more than 500 values per list, this was just to ilustrate the json format**
+![image](https://user-images.githubusercontent.com/29716233/137938617-6f23e37a-cd35-406c-903c-b126f41b5989.png)
 
 ## Authors
 
