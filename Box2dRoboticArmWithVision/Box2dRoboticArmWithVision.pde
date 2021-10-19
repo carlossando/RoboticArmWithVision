@@ -123,6 +123,9 @@ void draw() {
             }
         }
     }
+    if (box.pos.x > 540 && box.pos.x < 620 && box.pos.y < 425) {
+        exitoso = true;
+    }
     //Time
     if (timerOn) {
         ellapsedTime = (millis() - startTime);
