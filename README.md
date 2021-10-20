@@ -13,19 +13,25 @@ The project has two subprojects, the first one being the "BloblDetectionWithColo
 
 The second subproject is the robotic arm, once the parameters are passed to the main tab ("Box2dRoboticArmWithVision"), the program is ready to use.
 
+
 ### Prerequisites
 
 Requirements to be able to run de code
 - [Processing 3.5.4](https://processing.org/)
 - [Box2d for processing](https://github.com/shiffman/Box2D-for-Processing)
+- [Video The Processing Foundation](https://processing.org/reference/libraries/video/index.html)
 
 ### Installing
 
 Install processing 3.5.4 or the latest stable release, and open it.
 
-To install the library go to Sketch -> Import Library -> Add Library... and search for
+To install the librarie go to Sketch -> Import Library -> Add Library... and search for
 
     Box2D for Processing
+
+and
+
+    Video The Processing Foundation
 
 To install the project you can download the zip file or you can clone it
 
