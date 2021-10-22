@@ -145,7 +145,8 @@ void draw() {
     //Display the Text
     fill(0);
     text("Ellapsed Time= " + ellapsedTime + " ms", 10,10);
-    text("Reading file data" + fileNum, 10,30);
+    text("Reading file data" + fileNum, 10,25);
+    text("Press < or > keys to navigate between files", 10, 40);
 }
 
 void RestartApp(){
@@ -189,9 +190,19 @@ void AddBoundaries(float x, float y, float _width, float _height){
 }
 
 void keyPressed() {
+    println(keyCode);
     if (keyCode == 32) {
         robot.toggleMotor();
-    }else if (keyCode == 83) {
-        
+    }else if (keyCode == 39) { //Next
+        playingData = false;
+        timerOn = false;
+        RestartApp();
+    }else if (keyCode == 37) { //Prev
+        if (fileNum > 1) {
+            playingData = false;
+            timerOn = false;
+            fileNum = fileNum -2; 
+            RestartApp();
+        }
     }
 }
