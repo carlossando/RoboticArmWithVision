@@ -1,4 +1,4 @@
-# Pick and Place Vision-Guided Robotic Arm (Playback Reocrding Data)
+# Pick and Place Vision-Guided Robotic Arm (Playback Recording Data)
 
 **This is one of 3 branches, this branch is the playback-recordings, just for visualizing the data, if you want to record data go to the "Recorder App" branch, else if you want to play with the physics, go to "Playground App" branch.**
 
