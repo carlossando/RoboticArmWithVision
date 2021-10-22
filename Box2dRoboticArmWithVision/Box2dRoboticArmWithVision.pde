@@ -137,7 +137,6 @@ void draw() {
 
     //Display the Play Box
     box.display();
-
     //Time
     if (timerOn) {
         ellapsedTime = (millis() - startTime);
@@ -190,7 +189,6 @@ void AddBoundaries(float x, float y, float _width, float _height){
 }
 
 void keyPressed() {
-    println(keyCode);
     if (keyCode == 32) {
         robot.toggleMotor();
     }else if (keyCode == 39) { //Next
