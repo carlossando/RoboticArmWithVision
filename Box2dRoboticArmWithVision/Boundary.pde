@@ -1,37 +1,32 @@
 // A fixed boundary class
-
 class Boundary {
-
   // A boundary is a simple rectangle with x,y,width,and height
-  float x,y;
-  float w,h;
-  
-  // But we also have to make a body for box2d to know about it
+  float xPos, yPos;
+  float width, height;
   Body b;
 
-  Boundary(float x_,float y_, float w_, float h_) {
-    x = x_;
-    y = y_;
-    w = w_;
-    h = h_;
+  Boundary(float xPos, float yPos, float width, float height) {
+    // Store the position and size of the boundary
+    this.xPos = xPos;
+    this.yPos = yPos;
+    this.width = width;
+    this.height = height;
 
-    // Define the polygon
+    // Define the polygon and set its dimensions directly
     PolygonShape sd = new PolygonShape();
-    // Figure out the box2d coordinates
-    float box2dW = box2d.scalarPixelsToWorld(w/2);
-    float box2dH = box2d.scalarPixelsToWorld(h/2);
-    // We're just a box
-    sd.setAsBox(box2dW, box2dH);
-
+    sd.setAsBox(
+      box2d.scalarPixelsToWorld(width/2),
+      box2d.scalarPixelsToWorld(height/2)
+    );
 
     // Create the body
     BodyDef bd = new BodyDef();
     bd.type = BodyType.STATIC;
-    bd.position.set(box2d.coordPixelsToWorld(x,y));
+    bd.position.set(box2d.coordPixelsToWorld(xPos, yPos));
     b = box2d.createBody(bd);
-    
-    // Attached the shape to the body using a Fixture
-    b.createFixture(sd,1);
+
+    // Attach the shape to the body using a Fixture
+    b.createFixture(sd, 1);
 
     b.setUserData(this);
   }
@@ -41,7 +36,7 @@ class Boundary {
     fill(0);
     stroke(0);
     rectMode(CENTER);
-    rect(x,y,w,h);
+    rect(xPos, yPos, width, height);
   }
-
 }
+

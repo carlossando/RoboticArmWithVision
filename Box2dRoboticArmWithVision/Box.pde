@@ -1,23 +1,20 @@
-// A rectangular box
-
+/// A rectangular box
 class Box {
-
   Body body;
-  float w;
-  float h;
+  float width;
+  float height;
   color col;
 
   // Constructor
-  Box(float x_, float y_) {
-    float x = x_;
-    float y = y_;
-    w = 50;
-    h = 50;
+  Box(float xPos, float yPos) {
+    // Store the box's dimensions
+    this.width = 50;
+    this.height = 50;
     // Add the box to the box2d world
-    makeBody(new Vec2(x,y),w,h);
-    //Set user data for collision 
+    makeBody(new Vec2(xPos, yPos), width, height);
+    // Set user data for collision 
     body.setUserData(this);
-    //Set a specific color
+    // Set a specific color
     col = color(175); 
   }
 
@@ -47,21 +44,20 @@ class Box {
     // We look at each body and get its screen position
     Vec2 pos = box2d.getBodyPixelCoord(body);
     // Get its angle of rotation
-    float a = body.getAngle();
+    float angle = body.getAngle();
 
     rectMode(PConstants.CENTER);
     pushMatrix();
-    translate(pos.x,pos.y);
-    rotate(a);
+    translate(pos.x, pos.y);
+    rotate(angle);
     fill(col);
     stroke(0);
-    rect(0,0,w,h);
+    rect(0, 0, width, height);
     popMatrix();
   }
 
-
-  // This function adds the rectangle to the box2d world
-  void makeBody(Vec2 center, float w_, float h_) {
+   // This function adds the rectangle to the box2d world
+  void makeBody(Vec2 center, float width, float height) {
     // Define and create the body
     BodyDef bd = new BodyDef();
     bd.type = BodyType.DYNAMIC;
@@ -70,9 +66,9 @@ class Box {
 
     // Define a polygon (this is what we use for a rectangle)
     PolygonShape sd = new PolygonShape();
-    float box2dW = box2d.scalarPixelsToWorld(w_/2);
-    float box2dH = box2d.scalarPixelsToWorld(h_/2);
-    sd.setAsBox(box2dW, box2dH);
+    float box2dWidth = box2d.scalarPixelsToWorld(width/2);
+    float box2dHeight = box2d.scalarPixelsToWorld(height/2);
+    sd.setAsBox(box2dWidth, box2dHeight);
 
     // Define a fixture
     FixtureDef fd = new FixtureDef();
@@ -88,5 +84,4 @@ class Box {
     // Give it some initial random velocity
     body.setLinearVelocity(new Vec2(random(4, 5), random(0, 1)));
   }
-
 }

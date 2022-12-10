@@ -3,13 +3,8 @@ import org.jbox2d.common.*;
 import org.jbox2d.dynamics.joints.*;
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.collision.shapes.Shape;
-import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
 import org.jbox2d.dynamics.contacts.*;
-import shiffman.box2d.*;
-import org.jbox2d.collision.shapes.*;
-import org.jbox2d.common.*;
-import org.jbox2d.dynamics.*;
 import processing.video.*;
 
 //Video for image recognition
@@ -121,14 +116,18 @@ void processImage(){
             if (d < threshold*threshold) {
 
                 boolean found = false;
+                // This is too close to the tracked color
+                // Search through all the previous blobs to see if it is near one
                 for (Blob b : blobs) {
-                if (b.isNear(x, y)) {
-                    b.add(x, y);
-                    found = true;
-                    break;
-                }
+                    // If it is within the threshold, add it to that blob
+                    if (b.isNear(x, y)) {
+                        b.add(x, y);
+                        found = true;
+                        break;
+                    }
                 }
 
+                // If it's not near any of the previous blobs, start a new one
                 if (!found) {
                     Blob b = new Blob(x, y);
                     blobs.add(b);
